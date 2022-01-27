@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="check" viewBox="0 0 16 16">
+        <title>Check</title>
+        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+    </symbol>
+</svg>
+
+<div class="container py-3">
+
+    <header th:insert="includes/header :: header"></header>
+
+    <main>
+        <table border="2" style="width:100%">
+            <tr>
+                <td>Name</td>
+                <td>Description</td>
+                <td>Deadline (Year-Month-Day)</td>
+                <td>Priority</td>
+                <td>Done</td>
+                <td>Update</td>
+                <td>Delete</td>
+            </tr>
+            <div th:each="element: ${tasks}">
+                <tr style="height:100px">
+                    <td><p th:text="${element.title}"></p></td>
+                    <td><p th:text="${element.description}"></p></td>
+                    <td><p th:text="${element.date}"></p></td>
+                    <td><p th:text="${element.priority}"></p></td>
+                    <td><p th:text="${element.done}"/></td>
+                    <td>
+                        <form action="/task/update" method="post">
+                            <input type="hidden" name="id" th:value="${element.id}">
+                            <input type="hidden" name="done" th:value="${element.done}">
+                            <button type="submit" style="background-color: white;color: black;border-radius: 12px;border: 2px solid #4CAF50;">Done</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/task/delete" method="post">
+                            <input type="hidden" name="id" th:value="${element.id}">
+                            <button type="submit" style="background-color: white;color: black;border-radius: 12px;border: 2px solid #4CAF50;">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </div>
+        </table>
+    </main>
+
+    <footer th:insert="includes/footer :: footer"></footer>
+
+</div>
+</body>
+</html>
